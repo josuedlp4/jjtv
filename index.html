@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Descarga JJTV beta1 para Android y Android TV. Reproductor nativo con modo fluido.">
+<meta name="description" content="Descarga JJTV beta2 para Windows, Android y Android TV. Cine abierto disponible; proveedor de canales temporalmente no disponible.">
 <meta property="og:title" content="JJTV para Android y Android TV">
-<meta property="og:description" content="Descarga JJTV beta1 para Android y Android TV.">
+<meta property="og:description" content="Descarga JJTV beta2 para Windows, Android y Android TV.">
 <meta name="theme-color" content="#0a0c0a">
 <title>JJTV para Android</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,7 +90,7 @@ h2{font-size:44px;line-height:1.08;font-weight:800;letter-spacing:-.025em;margin
 footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
 
 .rv{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
-.dls{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.dls{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .dl{padding:36px 32px;display:flex;flex-direction:column;gap:14px;transition:background .25s}
 .dl+.dl{border-left:1px solid var(--line)}
 .dl:hover{background:var(--raise)}
@@ -163,9 +163,9 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
   <main id="top" class="hero">
     <div class="load">
       <h1>Tu tele,<br>en <span class="rot"><em id="rot">el celular.</em></span></h1>
-      <p class="lead">JJTV es una app para Android que reproduce video con el reproductor nativo del sistema y tiene un modo fluido para que no se trabe. La versión beta1 ya se puede instalar.</p>
-      <a class="btn" href="#descarga" data-dl>Descargar JJTV beta1</a>
-      <p class="meta">APK de 56 MB · funciona en ARM64, ARMv7 y x86_64</p>
+      <p class="lead">JJTV beta2 está disponible para Windows, Android y Android TV. Incluye cuatro cortos abiertos reproducibles y avisos de actualización dentro de la app.</p>
+      <a class="btn" href="#descarga" data-dl>Descargar JJTV beta2</a>
+      <p class="meta">El proveedor anterior rechaza la conexión: sus canales y el resto del catálogo siguen sin funcionar.</p>
     </div>
     <div class="phone" aria-hidden="true">
       <div class="screen">
@@ -189,7 +189,7 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
         <h3>Android</h3>
         <p>Para celulares y tablets con Android.</p>
         <a class="btn" href="#descarga" data-dl>Descargar para Android</a>
-        <small>JJTV-Android-beta1.apk · 56 MB</small>
+        <small>JJTV-Android-beta2.apk · 56 MB</small>
       </div>
       <div class="dl">
         <h3>Android TV</h3>
@@ -198,6 +198,12 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
         <ul>
           <li>Descárgala en tu celular o computador y pásala a la TV con una memoria USB.</li>
         </ul>
+      </div>
+      <div class="dl">
+        <h3>Windows 11</h3>
+        <p>Versión portátil. Descomprime el ZIP y abre JJTV.exe; conserva la carpeta data si ya usabas JJTV.</p>
+        <a class="btn" href="https://github.com/josuedlp4/jjtv/releases/download/v1-beta2/JJTV-Windows-beta2.zip">Descargar para Windows</a>
+        <small>JJTV-Windows-beta2.zip · 195 MB</small>
       </div>
     </div>
   </section>
@@ -213,13 +219,13 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
   </section>
 
   <section class="rv">
-    <p class="fact">Es la <b>beta1</b>: pesa <b>56 MB</b> y todavía está en pruebas, así que puede tener fallos.</p>
+    <p class="fact">Es la <b>beta2</b>. El cine abierto funciona; el proveedor de canales y del catálogo comercial todavía rechaza la conexión.</p>
   </section>
 
   <section id="instalar" class="rv">
     <h2>Se instala en tres pasos</h2>
     <div class="steps">
-      <div class="step"><span>1</span><h3>Descarga</h3><p>Guarda el archivo JJTV-Android-beta1.apk en tu dispositivo.</p></div>
+      <div class="step"><span>1</span><h3>Descarga</h3><p>Guarda el archivo JJTV-Android-beta2.apk en tu dispositivo.</p></div>
       <div class="step"><span>2</span><h3>Da permiso</h3><p>Android te pedirá activar “Instalar apps desconocidas” para tu navegador o gestor de archivos.</p></div>
       <div class="step"><span>3</span><h3>Abre</h3><p>Toca el archivo, instala y busca JJTV en tus aplicaciones.</p></div>
     </div>
@@ -248,14 +254,14 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
 
 (function(){
   /* PEGA AQUÍ EL ENLACE DIRECTO DE TU APK (termina en .apk) */
-  var APK_URL='https://github.com/josuedlp4/jjtv/releases/download/v1-beta1/JJTV-Android-beta1.apk';
+  var APK_URL='https://github.com/josuedlp4/jjtv/releases/download/v1-beta2/JJTV-Android-beta2.apk';
   var t=document.getElementById('toast'),tm;
   function say(m){t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on')},4000);}
   document.querySelectorAll('[data-dl]').forEach(function(a){
     if(APK_URL){a.setAttribute('href',APK_URL);}
     a.addEventListener('click',function(e){
       if(!APK_URL){e.preventDefault();say('Todavía no hay enlace de descarga configurado.');return;}
-      say('Descargando JJTV beta1…');
+      say('Descargando JJTV beta2…');
     });
   });
 })();
