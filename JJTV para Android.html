@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Descarga JJTV beta1 para Android y Android TV. Reproductor nativo con modo fluido.">
+<meta property="og:title" content="JJTV para Android y Android TV">
+<meta property="og:description" content="Descarga JJTV beta1 para Android y Android TV.">
+<meta name="theme-color" content="#0a0c0a">
+<title>JJTV para Android</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0a0c0a; --ink:#e9efe9; --mute:#8d998d; --line:#252b25; --raise:#121512; --g:#7cff6b;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:19px;line-height:1.55;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--g);outline-offset:3px}
+
+header{display:flex;justify-content:space-between;align-items:center;padding:26px 0}
+.brand{font-weight:800;font-size:26px;text-decoration:none;letter-spacing:-.02em}
+.brand b{color:var(--g)}
+header nav{display:flex;gap:28px;align-items:center;font-size:17px}
+header nav a{text-decoration:none;background:linear-gradient(var(--g),var(--g)) 0 100%/0 2px no-repeat;transition:background-size .25s;padding-bottom:2px}
+header nav a:hover{background-size:100% 2px}
+
+.btn{display:inline-block;background:var(--g);color:#06130a;font-weight:800;font-size:19px;line-height:1.2;padding:15px 26px;border-radius:6px;text-decoration:none;transition:transform .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 #1d6b27}
+.btn:active{transform:none;box-shadow:none}
+
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:56px 0 96px}
+h1{font-size:76px;line-height:.98;font-weight:800;letter-spacing:-.035em;margin:0 0 26px}
+h1 em{font-style:normal;color:var(--g)}
+.lead{max-width:30em;color:var(--mute);margin:0 0 34px}
+.meta{margin-top:18px;font-size:15px;color:var(--mute)}
+.load>*{opacity:0;transform:translateY(14px);animation:up .7s cubic-bezier(.2,.7,.2,1) forwards}
+.load>*:nth-child(2){animation-delay:.1s}.load>*:nth-child(3){animation-delay:.2s}.load>*:nth-child(4){animation-delay:.3s}
+@keyframes up{to{opacity:1;transform:none}}
+
+/* Teléfono */
+.phone{width:270px;margin:0 auto;border:2px solid var(--line);border-radius:36px;padding:12px;background:var(--raise);transform:rotate(3deg);opacity:0;animation:pop .9s .35s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes pop{from{opacity:0;transform:translateY(40px) rotate(8deg)}to{opacity:1;transform:rotate(3deg)}}
+.screen{background:#000;border-radius:26px;overflow:hidden;aspect-ratio:9/17;display:flex;flex-direction:column}
+.video{position:relative;flex:0 0 36%;background:#0d1a10;display:grid;place-items:center;overflow:hidden}
+.video::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(124,255,107,.07) 0 2px,transparent 2px 5px);animation:roll 1.2s linear infinite}
+@keyframes roll{to{background-position:0 5px}}
+.video i{width:0;height:0;border-left:26px solid var(--g);border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:6px}
+.live{position:absolute;top:10px;left:10px;font-size:11px;font-weight:600;background:#000;border-radius:3px;padding:2px 7px;display:flex;gap:5px;align-items:center}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:#ff4d4d;animation:dot 1.2s steps(2) infinite}
+@keyframes dot{50%{opacity:.15}}
+.bar{height:4px;background:#1c231c}.bar div{height:100%;width:0;background:var(--g);animation:prog 9s linear infinite}
+@keyframes prog{to{width:100%}}
+.rows{padding:12px 14px;display:grid;gap:10px;align-content:start;font-size:13px}
+.row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;background:#0f130f;color:var(--mute)}
+.row::before{content:"";width:26px;height:26px;border-radius:6px;background:#1b241b;flex:none}
+.row.on{color:var(--ink);outline:1px solid var(--g)}
+.chip{margin:auto 14px 14px;font-size:12px;color:var(--g);border:1px solid #1f4a22;border-radius:999px;padding:5px 12px;text-align:center}
+
+/* Secciones */
+section{padding:0 0 96px}
+h2{font-size:44px;line-height:1.08;font-weight:800;letter-spacing:-.025em;margin:0 0 36px;max-width:16em}
+.list{border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:.8fr 1.2fr;gap:32px;padding:26px 0;border-bottom:1px solid var(--line);transition:padding-left .25s,color .25s}
+.item:hover{padding-left:14px}
+.item:hover h3{color:var(--g)}
+.item h3{margin:0;font-size:24px;line-height:1.2;font-weight:600;transition:color .25s}
+.item p{margin:0;color:var(--mute)}
+.fact{font-size:30px;line-height:1.35;font-weight:600;letter-spacing:-.01em;max-width:24em;margin:0}
+.fact b{color:var(--g);font-weight:800}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.step{padding:28px 28px 0 0}
+.step+.step{padding-left:28px;border-left:1px solid var(--line)}
+.step span{font-size:56px;font-weight:800;color:var(--g);line-height:1;display:block;margin-bottom:12px}
+.step h3{margin:0 0 6px;font-size:22px}.step p{margin:0;color:var(--mute);font-size:17px}
+
+.cta{background:var(--g);color:#06130a;border-radius:10px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap}
+.cta h2{margin:0;color:#06130a;font-size:46px}
+.cta .btn{background:#06130a;color:var(--g)}
+.cta .btn:hover{box-shadow:4px 4px 0 #1d6b27}
+.cta p{margin:14px 0 0;font-size:15px;max-width:34em;color:#0e3a15}
+
+footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
+.dls{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.dl{padding:36px 32px;display:flex;flex-direction:column;gap:14px;transition:background .25s}
+.dl+.dl{border-left:1px solid var(--line)}
+.dl:hover{background:var(--raise)}
+.dl h3{margin:0;font-size:30px;line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.dl p{margin:0;color:var(--mute);font-size:17px}
+.dl .btn{align-self:flex-start;margin-top:6px}
+.dl small{color:var(--mute);font-size:14px}
+.dl ul{margin:0;padding-left:18px;color:var(--mute);font-size:16px}
+.dl li{margin:4px 0}
+.url{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:13px;color:var(--mute);word-break:break-all}
+.url button{flex:none;background:transparent;border:1px solid var(--g);color:var(--g);border-radius:5px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
+.url button:hover{background:var(--g);color:#06130a}
+@media (max-width:860px){.dls{grid-template-columns:1fr}.dl+.dl{border-left:0;border-top:1px solid var(--line)}.dl{padding:28px 22px}}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:48px;padding-bottom:64px}
+  h1{font-size:50px}h2{font-size:34px}.cta h2{font-size:34px}.cta{padding:32px 24px}
+  .item{grid-template-columns:1fr;gap:6px}
+  .steps{grid-template-columns:1fr}.step,.step+.step{padding:24px 0;border-left:0;border-bottom:1px solid var(--line)}
+  header nav a:not(.btn){display:none}.fact{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .load>*,.rv,.phone{opacity:1;transform:none}.phone{transform:rotate(3deg)}.bar div{width:40%}
+}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--g);color:#06130a;font-weight:800;font-size:17px;padding:14px 22px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:20;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+#prog{position:fixed;top:0;left:0;height:4px;width:0;background:var(--g);z-index:50}
+.rot{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em}
+#rot{display:inline-block}
+#rot.swap{animation:wordin .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wordin{from{transform:translateY(105%)}to{transform:none}}
+.mq{overflow:hidden;white-space:nowrap;background:var(--g);color:#06130a;margin:0 0 96px;padding:16px 0;transform:rotate(-1.2deg);font-weight:800;font-size:26px;letter-spacing:-.01em}
+.mq>div{display:inline-block;animation:marq 28s linear infinite}
+.mq span{margin:0 22px}
+.mq i{display:inline-block;width:14px;height:14px;background:#06130a;transform:rotate(45deg);vertical-align:middle}
+@keyframes marq{to{transform:translateX(-50%)}}
+.screen{transform:perspective(700px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease-out}
+.row{transition:background .3s,color .3s,outline-color .3s}
+.row.on{background:#13301a}
+.rv h2{clip-path:inset(0 100% 0 0)}
+.rv.on h2{animation:wipe .9s .1s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+.rv .item,.rv .step,.rv .dl{opacity:0}
+.rv.on .item,.rv.on .step,.rv.on .dl{animation:up .7s cubic-bezier(.2,.7,.2,1) both}
+.rv.on .item:nth-child(2),.rv.on .step:nth-child(2),.rv.on .dl:nth-child(2){animation-delay:.15s}
+.rv.on .item:nth-child(3),.rv.on .step:nth-child(3){animation-delay:.3s}
+.rv.on .item:nth-child(4){animation-delay:.45s}
+.rv .step span{display:inline-block;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.rv .step:hover span{transform:rotate(-8deg) scale(1.2)}
+.btn{position:relative;overflow:hidden}
+.btn.go::after{content:"";position:absolute;inset:0 auto 0 0;width:0;background:rgba(0,0,0,.22);animation:fill 2.6s ease-out forwards}
+@keyframes fill{to{width:100%}}
+.cta{animation:none}
+.cta .btn{animation:nudge 3s ease-in-out 2s infinite}
+@keyframes nudge{0%,90%,100%{transform:none}93%{transform:translateX(-5px)}96%{transform:translateX(5px)}}
+@media (max-width:860px){.mq{font-size:20px;margin-bottom:64px}}
+@media (prefers-reduced-motion:reduce){#prog{display:none}.rv h2{clip-path:none}.rv .item,.rv .step,.rv .dl{opacity:1}.mq{transform:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#top">JJ<b>TV</b></a>
+    <nav aria-label="Principal"><a href="#descargas">Descargas</a><a href="#funciones">Qué trae</a><a href="#instalar">Instalar</a><a class="btn" style="font-size:16px;padding:10px 18px" href="#descarga" data-dl>Descargar</a></nav>
+  </header>
+
+  <main id="top" class="hero">
+    <div class="load">
+      <h1>Tu tele,<br>en <span class="rot"><em id="rot">el celular.</em></span></h1>
+      <p class="lead">JJTV es una app para Android que reproduce video con el reproductor nativo del sistema y tiene un modo fluido para que no se trabe. La versión beta1 ya se puede instalar.</p>
+      <a class="btn" href="#descarga" data-dl>Descargar JJTV beta1</a>
+      <p class="meta">APK de 56 MB · funciona en ARM64, ARMv7 y x86_64</p>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="screen">
+        <div class="video"><span class="live">EN VIVO</span><i></i></div>
+        <div class="bar"><div></div></div>
+        <div class="rows"><div class="row on">Reproduciendo</div><div class="row">Siguiente</div><div class="row">Más tarde</div></div>
+        <div class="chip">Modo fluido activo</div>
+      </div>
+    </div>
+  </main>
+
+  <div class="mq" aria-hidden="true"><div>
+    <span>Reproductor nativo</span><i></i><span>Modo fluido</span><i></i><span>Transmisiones HLS</span><i></i><span>Diagnóstico de red</span><i></i><span>Android y Android TV</span><i></i>
+    <span>Reproductor nativo</span><i></i><span>Modo fluido</span><i></i><span>Transmisiones HLS</span><i></i><span>Diagnóstico de red</span><i></i><span>Android y Android TV</span><i></i>
+  </div></div>
+
+  <section id="descargas" class="rv">
+    <h2>Descarga para tu dispositivo</h2>
+    <div class="dls">
+      <div class="dl">
+        <h3>Android</h3>
+        <p>Para celulares y tablets con Android.</p>
+        <a class="btn" href="#descarga" data-dl>Descargar para Android</a>
+        <small>JJTV-Android-beta1.apk · 56 MB</small>
+      </div>
+      <div class="dl">
+        <h3>Android TV</h3>
+        <p>Para televisores con Android TV o Google TV. Es el mismo archivo: la app ya está preparada para el control remoto.</p>
+        <a class="btn" href="#descarga" data-dl>Descargar para Android TV</a>
+        <ul>
+          <li>Descárgala en tu celular o computador y pásala a la TV con una memoria USB.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="funciones" class="rv">
+    <h2>Lo que trae esta versión</h2>
+    <div class="list">
+      <div class="item"><h3>Reproductor nativo</h3><p>Usa Media3 (ExoPlayer), el reproductor de Android, con soporte para transmisiones HLS.</p></div>
+      <div class="item"><h3>Modo fluido</h3><p>Un relevo con FFmpeg limpia la señal antes de dársela al reproductor, para que el video no se corte.</p></div>
+      <div class="item"><h3>Diagnóstico de red</h3><p>Trae herramientas de DNS y de conexión para saber por qué un video no carga.</p></div>
+      <div class="item"><h3>Varios dispositivos</h3><p>Hay versión para celulares ARM de 64 y 32 bits, y para x86_64 como los emuladores.</p></div>
+    </div>
+  </section>
+
+  <section class="rv">
+    <p class="fact">Es la <b>beta1</b>: pesa <b>56 MB</b> y todavía está en pruebas, así que puede tener fallos.</p>
+  </section>
+
+  <section id="instalar" class="rv">
+    <h2>Se instala en tres pasos</h2>
+    <div class="steps">
+      <div class="step"><span>1</span><h3>Descarga</h3><p>Guarda el archivo JJTV-Android-beta1.apk en tu dispositivo.</p></div>
+      <div class="step"><span>2</span><h3>Da permiso</h3><p>Android te pedirá activar “Instalar apps desconocidas” para tu navegador o gestor de archivos.</p></div>
+      <div class="step"><span>3</span><h3>Abre</h3><p>Toca el archivo, instala y busca JJTV en tus aplicaciones.</p></div>
+    </div>
+  </section>
+
+  <section class="rv">
+    <div class="cta">
+      <div>
+        <h2>Pruébala hoy.</h2>
+        <p>Es una beta firmada con una clave de pruebas, por eso Android o Play Protect pueden mostrar un aviso de app no verificada.</p>
+      </div>
+      <a class="btn" href="#descarga" data-dl>Descargar APK</a>
+    </div>
+  </section>
+
+  <footer>Descarga la app solo desde esta página. Si te llegó el APK por otro lado, no lo instales. JJTV es una app independiente, sin relación con canales ni proveedores de contenido.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return;}
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target);}});},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+(function(){
+  /* PEGA AQUÍ EL ENLACE DIRECTO DE TU APK (termina en .apk) */
+  var APK_URL='https://github.com/josuedlp4/jjtv/releases/download/v1-beta1/JJTV-Android-beta1.apk';
+  var t=document.getElementById('toast'),tm;
+  function say(m){t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on')},4000);}
+  document.querySelectorAll('[data-dl]').forEach(function(a){
+    if(APK_URL){a.setAttribute('href',APK_URL);}
+    a.addEventListener('click',function(e){
+      if(!APK_URL){e.preventDefault();say('Todavía no hay enlace de descarga configurado.');return;}
+      say('Descargando JJTV beta1…');
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var calm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* barra de progreso */
+  var p=document.getElementById('prog');
+  function sc(){var h=document.documentElement.scrollHeight-window.innerHeight;p.style.width=(h>0?Math.min(100,window.scrollY/h*100):0)+'%';}
+  window.addEventListener('scroll',sc,{passive:true});sc();
+  if(calm)return;
+  /* palabra que cambia */
+  var r=document.getElementById('rot'),w=['el celular.','tu tele.','la tablet.','tu bolsillo.'],i=0;
+  setInterval(function(){i=(i+1)%w.length;r.classList.remove('swap');void r.offsetWidth;r.textContent=w[i];r.classList.add('swap');},2400);
+  /* filas del teléfono */
+  var rows=document.querySelectorAll('.row'),k=0;
+  setInterval(function(){rows[k].classList.remove('on');k=(k+1)%rows.length;rows[k].classList.add('on');},1800);
+  /* inclinación del teléfono */
+  var s=document.querySelector('.screen');
+  if(s&&window.matchMedia('(hover: hover)').matches){
+    document.addEventListener('mousemove',function(e){
+      var x=e.clientX/window.innerWidth-.5,y=e.clientY/window.innerHeight-.5;
+      s.style.setProperty('--ry',(x*14)+'deg');s.style.setProperty('--rx',(-y*10)+'deg');
+    });
+  }
+  /* relleno al descargar */
+  document.querySelectorAll('[data-dl]').forEach(function(a){
+    a.addEventListener('click',function(){
+      if(a.classList.contains('go'))return;
+      var t=a.textContent;a.classList.add('go');a.textContent='Descargando…';
+      setTimeout(function(){a.classList.remove('go');a.textContent=t;},3200);
+    });
+  });
+})();
+</script>
+</body>
+</html>
