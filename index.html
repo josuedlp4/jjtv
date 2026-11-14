@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Descarga JJTV beta9 para Windows, Android y Android TV.">
+<meta name="description" content="Descarga JJTV beta10 para Windows, Android y Android TV.">
 <meta property="og:title" content="JJTV para Android y Android TV">
-<meta property="og:description" content="Descarga JJTV beta9 para Windows, Android y Android TV.">
+<meta property="og:description" content="Descarga JJTV beta10 para Windows, Android y Android TV.">
 <meta name="theme-color" content="#0a0c0a">
 <title>JJTV para Android</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,8 +163,8 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
   <main id="top" class="hero">
     <div class="load">
       <h1>Tu tele,<br>en <span class="rot"><em id="rot">el celular.</em></span></h1>
-      <p class="lead">JJTV beta9 está disponible para Windows, Android y Android TV, con una nueva interfaz y actualizaciones obligatorias para próximas versiones.</p>
-      <a class="btn" href="#descarga" data-dl>Descargar JJTV beta9</a>
+      <p class="lead">JJTV beta10 está disponible para Windows, Android y Android TV, con una nueva interfaz y actualizaciones obligatorias para próximas versiones.</p>
+      <a class="btn" href="#descarga" data-dl>Descargar JJTV beta10</a>
       <p class="meta">La disponibilidad de canales y títulos depende de la conexión y del proveedor.</p>
     </div>
     <div class="phone" aria-hidden="true">
@@ -189,7 +189,7 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
         <h3>Android</h3>
         <p>Para celulares y tablets con Android.</p>
         <a class="btn" href="#descarga" data-dl>Descargar para Android</a>
-        <small>JJTV-Android-TV-beta9.apk · 50 MB</small>
+        <small>JJTV-Android-TV-beta10.apk · 50 MB</small>
       </div>
       <div class="dl">
         <h3>Android TV</h3>
@@ -202,8 +202,8 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
       <div class="dl">
         <h3>Windows 11</h3>
         <p>Versión portátil. Descomprime el ZIP y abre JJTV.exe; conserva la carpeta data si ya usabas JJTV.</p>
-        <a class="btn" href="https://github.com/josuedlp4/jjtv/releases/download/v1-beta9/JJTV-Windows-beta9.zip">Descargar para Windows</a>
-        <small>JJTV-Windows-beta9.zip · 194 MB</small>
+        <a class="btn" href="https://github.com/josuedlp4/jjtv/releases/download/v1-beta10/JJTV-Windows-beta10.zip">Descargar para Windows</a>
+        <small>JJTV-Windows-beta10.zip · 194 MB</small>
       </div>
     </div>
   </section>
@@ -225,7 +225,7 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
   <section id="instalar" class="rv">
     <h2>Se instala en tres pasos</h2>
     <div class="steps">
-      <div class="step"><span>1</span><h3>Descarga</h3><p>Guarda el archivo JJTV-Android-TV-beta9.apk en tu dispositivo.</p></div>
+      <div class="step"><span>1</span><h3>Descarga</h3><p>Guarda el archivo JJTV-Android-TV-beta10.apk en tu dispositivo.</p></div>
       <div class="step"><span>2</span><h3>Da permiso</h3><p>Android te pedirá activar “Instalar apps desconocidas” para tu navegador o gestor de archivos.</p></div>
       <div class="step"><span>3</span><h3>Abre</h3><p>Toca el archivo, instala y busca JJTV en tus aplicaciones.</p></div>
     </div>
@@ -254,14 +254,14 @@ footer{padding:0 0 56px;color:var(--mute);font-size:14px;max-width:44em}
 
 (function(){
   /* PEGA AQUÍ EL ENLACE DIRECTO DE TU APK (termina en .apk) */
-  var APK_URL='https://github.com/josuedlp4/jjtv/releases/download/v1-beta9/JJTV-Android-TV-beta9.apk';
+  var APK_URL='https://github.com/josuedlp4/jjtv/releases/download/v1-beta10/JJTV-Android-TV-beta10.apk';
   var t=document.getElementById('toast'),tm;
   function say(m){t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(function(){t.classList.remove('on')},4000);}
   document.querySelectorAll('[data-dl]').forEach(function(a){
     if(APK_URL){a.setAttribute('href',APK_URL);}
     a.addEventListener('click',function(e){
       if(!APK_URL){e.preventDefault();say('Todavía no hay enlace de descarga configurado.');return;}
-      say('Descargando JJTV beta9…');
+      say('Descargando JJTV beta10…');
     });
   });
 })();
